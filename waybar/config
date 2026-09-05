@@ -1,47 +1,97 @@
 {
     "position": "top",
     "height": 36,
-    "spacing": 4,
-    "modules-left": ["hyprland/workspaces"],
-    "modules-center": ["hyprland/window"],
-    "modules-right": ["pulseaudio", "memory", "clock", "tray"],
-
+    "spacing": 6,
+    "modules-left": [
+        "hyprland/workspaces"
+    ],
+    "modules-center": [
+        "hyprland/window"
+    ],
+    "modules-right": [
+        "custom/notification",
+        "network",
+        "pulseaudio",
+        "cpu",
+        "memory",
+        "clock",
+        "tray"
+    ],
     "hyprland/workspaces": {
         "disable-scroll": false,
         "all-outputs": true,
         "warp-on-scroll": false,
         "format": "{id} {icon}",
         "format-icons": {
-            "active": "",
-            "default": "",
-            "urgent": ""
+            "active": "●",
+            "default": "○",
+            "urgent": "◉"
         }
     },
-
     "hyprland/window": {
         "max-length": 50
     },
-
-    "memory": {
-        "format": "{used:0.1f}G ",
-        "tooltip": false
-    },
-
-    "pulseaudio": {
-        "format": "{volume}% {icon}",
-        "format-muted": "󰅶",
+    "custom/notification": {
+        "exec": "swaync-client -swb",
+        "return-type": "json",
+        "format": "{icon}",
         "format-icons": {
-            "default": ["", "", ""]
+            "notification": "󰂚",
+            "none": "󰂜",
+            "dnd-notification": "󰂛",
+            "dnd-none": "󰂛",
+            "inhibited-notification": "󰂚",
+            "inhibited-none": "󰂜",
+            "dnd-inhibited-notification": "󰂛",
+            "dnd-inhibited-none": "󰂛"
         },
+        "tooltip": true,
+        "escape": true,
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw"
+    },
+    "network": {
+        "format-wifi": "󰤨  {signalStrength}%",
+        "format-ethernet": "󰈀  wired",
+        "format-linked": "󰈀  {ifname}",
+        "format-disconnected": "󰖪  off",
+        "tooltip-format": "{ifname}  {ipaddr}/{cidr}\n{bandwidthDownBits} ↓  {bandwidthUpBits} ↑",
+        "tooltip-format-wifi": "{essid} ({signalStrength}%)\n{ifname}  {ipaddr}/{cidr}",
+        "tooltip-format-disconnected": "disconnected",
+        "on-click": "ghostty -e nmtui"
+    },
+    "pulseaudio": {
+        "format": "{icon}  {volume}%",
+        "format-muted": "󰝟  muted",
+        "format-icons": {
+            "headphone": "󰋋",
+            "headset": "󰋎",
+            "default": [
+                "󰕿",
+                "󰖀",
+                "󰕾"
+            ]
+        },
+        "scroll-step": 5,
         "on-click": "pavucontrol"
     },
-
+    "cpu": {
+        "interval": 2,
+        "format": "󰻠  {usage}%",
+        "tooltip": true,
+        "on-click": "ghostty -e btop"
+    },
+    "memory": {
+        "interval": 5,
+        "format": "󰍛  {used:0.1f}G",
+        "tooltip": true,
+        "tooltip-format": "{used:0.1f}G / {total:0.1f}G  ({percentage}%)",
+        "on-click": "ghostty -e btop"
+    },
     "clock": {
-        "format": "{:%I:%M %p}",
-        "format-alt": "{:%Y-%m-%d}",
+        "format": "󰥔  {:%a, %b %e   %I:%M %p}",
         "tooltip-format": "<big>{:%B %Y}</big>\n<tt>{calendar}</tt>"
     },
-
     "tray": {
         "spacing": 10
     }

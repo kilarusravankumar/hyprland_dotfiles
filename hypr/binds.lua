@@ -37,6 +37,9 @@ hl.bind("SUPER + SHIFT + 5", hl.dsp.window.move({ workspace = "5" }))
 hl.bind("SUPER + mouse_up", hl.dsp.focus({ workspace = "e+1" }))
 hl.bind("SUPER + mouse_down", hl.dsp.focus({ workspace = "e-1" }))
 
+-- toggle layout
+hl.bind("SUPER + J", hl.dsp.layout("togglesplit"))
+
 -- resize panes in workspace
 -- Resize active window
 hl.bind("SUPER + SHIFT + Right", hl.dsp.window.resize({ x = 50, y = 0, relative = true }))
@@ -49,8 +52,10 @@ hl.bind("SUPER + Left", hl.dsp.focus({ direction = "l" }))
 hl.bind("SUPER + Right", hl.dsp.focus({ direction = "r" }))
 hl.bind("SUPER + Up", hl.dsp.focus({ direction = "u" }))
 hl.bind("SUPER + Down", hl.dsp.focus({ direction = "d" }))
--- screen shot
-hl.bind("SUPER + SHIFT + S", hl.dsp.exec_cmd('grim -g "$(slurp)" - | wl-copy'))
+
+
+-- Clipboard history (cliphist + rofi)
+hl.bind("SUPER + V", hl.dsp.exec_cmd("cliphist list | rofi -dmenu | cliphist decode | wl-copy"))
 
 -- volume controls
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("pamixer -i 5"))
@@ -60,3 +65,13 @@ hl.bind("XF86AudioMute", hl.dsp.exec_cmd("pamixer -t"))
 -- brightness controls
 hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl set +5%"))
 hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl set 5%-"))
+
+-- hyprshot binds
+
+-- Capture a custom region (Super + S)
+hl.bind("SUPER + S", hl.dsp.exec_cmd("hyprshot -m region"))
+
+-- Capture the active window (Super + Shift + S)
+hl.bind("SUPER + SHIFT + S", hl.dsp.exec_cmd("hyprshot -m window"))
+-- Capture the entire monitor (Super + Ctrl + S)
+hl.bind("SUPER + CTRL + S", hl.dsp.exec_cmd("hyprshot -m output"))
